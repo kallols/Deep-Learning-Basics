@@ -38,15 +38,15 @@ preds = model.predict(image)
 
 # find the class label index with the largest corresponding
 # probability
+lb = pickle.loads(open("label_bin", "rb").read())
 i = preds.argmax(axis=1)[0]
-print(i)
-# label = lb.classes_[i]
-#
-# # draw the class label + probability on the output image
-# text = "{}: {:.2f}%".format(label, preds[0][i] * 100)
-# cv2.putText(output, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
-#             (0, 0, 255), 2)
-#
-# # show the output image
-# cv2.imshow("Image", output)
-# cv2.waitKey(0)
+label = lb.classes_[i]
+print("predicted image is: "+str(label))
+# draw the class label + probability on the output image
+text = "{}: {:.2f}%".format(label, preds[0][i] * 100)
+cv2.putText(output, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
+            (0, 0, 255), 2)
+
+# show the output image
+cv2.imshow("Image", output)
+cv2.waitKey(0)

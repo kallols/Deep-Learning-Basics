@@ -119,5 +119,7 @@ plt.savefig("plot")
 
 # save the model and label binarizer to disk
 print("[INFO] serializing network and label binarizer...")
-model.save("model")
-pickle.dump(model, open('model', 'wb'))
+model.save('model.h5')
+f = open("label_bin", "wb")
+f.write(pickle.dumps(lb))
+f.close()
