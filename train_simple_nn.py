@@ -117,7 +117,7 @@ plt.ylabel("Loss/Accuracy")
 plt.legend()
 plt.savefig("plot")
 
-# save the model and label binarizer to disk
+# save the keras model and label binarizer to disk
 print("[INFO] serializing network and label binarizer...")
 model.save('model.h5')
 f = open("label_bin", "wb")
