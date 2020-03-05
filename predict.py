@@ -8,17 +8,17 @@ import pickle
 import cv2
 
 # load the input image and resize it to the target spatial dimensions
-image = '/home/oto/Downloads/keras-tutorial/images/cat.jpg'
+image = '/home/oto/Downloads/keras-tutorial/images/dog.jpg'
 image = cv2.imread(image)
 output = image.copy()
-image = cv2.resize(image, (32, 32))
+image = cv2.resize(image, (64, 64))
 
 # scale the pixel values to [0, 1]
 image = image.astype("float") / 255.0
 
 # check to see if we should flatten the image and add a batch
 # dimension
-flatten = 1
+flatten = 0
 if flatten > 0:
     image = image.flatten()
     image = image.reshape((1, image.shape[0]))
@@ -28,10 +28,9 @@ if flatten > 0:
 else:
     image = image.reshape((1, image.shape[0], image.shape[1],
                            image.shape[2]))
-
 # load the model and label binarizer
 print("[INFO] loading network and label binarizer...")
-model = load_model("/home/oto/PycharmProjects/deep_learning/model.h5")
+model = load_model("/home/oto/PycharmProjects/deep_learning/small_vgg_model.h5")
 
 # make a prediction on the image
 preds = model.predict(image)
@@ -41,7 +40,7 @@ preds = model.predict(image)
 lb = pickle.loads(open("label_bin", "rb").read())
 i = preds.argmax(axis=1)[0]
 label = lb.classes_[i]
-print("predicted image is: "+str(label))
+print("predicted image is: " + str(label))
 # draw the class label + probability on the output image
 text = "{}: {:.2f}%".format(label, preds[0][i] * 100)
 cv2.putText(output, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
